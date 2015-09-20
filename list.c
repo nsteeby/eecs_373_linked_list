@@ -10,6 +10,28 @@
 list_t* insert_sorted(list_t* head, list_t* new_element) {
 	assert(head != NULL);
 	assert(new_element != NULL);
+	list_t* prev = head; 
+	list_t* current = head->next;
+
+	if(new_element->index <= head->index){
+		new_element->next = head;
+		head = new_element;
+	} else{
+		while(prev != NULL){
+			
+			if(current == NULL){
+				prev->next = new_element;
+				break;
+			}
+			else if(new_element->index < current->index){
+				new_element->next = current;
+				prev->next = new_element;
+				break;
+			}
+			prev = current;
+			current = current->next;
+		}
+	}
 
 	return head;
 }
@@ -18,7 +40,23 @@ list_t* insert_sorted(list_t* head, list_t* new_element) {
 // the resulting list. You do not need to preserve the original list.
 list_t* reverse(list_t* head) {
 	assert(head != NULL);
+	list_t* prev = NULL; 
+	list_t* current = head;
+	list_t* next;
 
-	return head;
+	while(current != NULL){
+		next = current->next;
+		current->next = prev;
+		prev = current;
+		current = next;
+	}
+
+	return prev;
 }
 
+/*
+Nathaniel Steeby
+nsteeby
+14303784
+EECS 373 Homework #2
+*/
